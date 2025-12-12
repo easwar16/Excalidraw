@@ -3,14 +3,14 @@ import {
   userSigninType,
   userSignupSchema,
   userSignupType,
-} from "./schemas";
+} from "@repo/backend-common/zod";
 import { prisma } from "@repo/db-schema/client";
 import jwt from "jsonwebtoken";
 import express from "express";
 import dotenv from "dotenv";
-import { errorHandler } from "./lib";
-import id from "zod/v4/locales/id.js";
-dotenv.config();
+import { errorHandler } from "./errorhandler";
+
+dotenv.config({ path: "../../.env" });
 const app = express();
 
 app.use(express.json());
@@ -52,6 +52,7 @@ app.post("/signin", async (req, res) => {
     if (!userExists?.id) {
       return res.status(403).json({ message: "User not found" });
     }
+
     const token = jwt.sign(
       { name: userExists?.name, id: userExists?.id },
       process.env.JWT_SECRET ?? ""
