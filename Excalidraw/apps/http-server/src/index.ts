@@ -1,3 +1,4 @@
+import cors from "cors";
 import {
   createRoomSchema,
   userSigninSchema,
@@ -20,6 +21,7 @@ dotenv.config({ path: "../../.env" });
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post("/signup", async (req, res) => {
   const body: userSignupType = req.body;
@@ -101,6 +103,15 @@ app.get("/chats/room/:roomId", async (req, res) => {
     take: 50,
   });
   return res.status(200).json({ messages });
+});
+app.get("/room/:slug", async (req, res) => {
+  const slug = req.params.slug;
+  const room = await prisma.room.findFirst({
+    where: {
+      slug,
+    },
+  });
+  return res.status(200).json({ roomId: room?.id });
 });
 
 app.use(errorHandler);
