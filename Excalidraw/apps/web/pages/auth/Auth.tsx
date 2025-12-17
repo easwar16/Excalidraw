@@ -101,7 +101,7 @@ export default function Auth() {
   useEffect(() => {
     axios.get("/api/auth/me", { withCredentials: true }).then((res) => {
       if (res.data.authenticated) {
-        router.replace("/");
+        router.replace("/canvas");
       }
     });
   }, []);

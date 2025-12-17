@@ -69,10 +69,13 @@ export default function LandingPage() {
                 <span>Start Drawing</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="flex items-center space-x-2 glass-effect text-white px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 text-lg font-medium">
+              <Link
+                href="https://github.com/easwar16/DrawFlow"
+                className="flex items-center space-x-2 glass-effect text-white px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 text-lg font-medium"
+              >
                 <Github className="w-5 h-5" />
                 <span>View on GitHub</span>
-              </button>
+              </Link>
             </div>
 
             <div className="relative group">
@@ -187,10 +190,13 @@ export default function LandingPage() {
                 Join thousands of teams using DrawFlow to bring their ideas to
                 life
               </p>
-              <button className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-pink-500 text-white px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 text-lg font-medium">
+              <Link
+                href="/auth"
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-pink-500 text-white px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 text-lg font-medium"
+              >
                 <span>Get Started for Free</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
