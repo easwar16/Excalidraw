@@ -63,6 +63,12 @@ export default function Auth() {
     if (signedIn.data.token) {
       resetInputs();
     }
+
+    axios.get("/api/auth/me", { withCredentials: true }).then((res) => {
+      if (res.data.authenticated) {
+        router.replace("/canvas");
+      }
+    });
   };
   const signupActionHandler = async () => {
     const payload = {

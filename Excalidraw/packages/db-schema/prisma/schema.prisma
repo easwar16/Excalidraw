@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
   rooms     Room[]
   chats     Chat[]
+  shapes    Shape[]   
 }
 
 model Room {
@@ -30,6 +31,7 @@ model Room {
   adminId   Int
   admin     User @relation(fields: [adminId],references: [id])
   chat      Chat[]
+  shapes    Shape[]
 }
 
 model Chat {
@@ -39,4 +41,26 @@ model Chat {
   userId  Int
   room    Room @relation(fields: [roomId],references: [id])
   user    User @relation(fields: [userId],references: [id])
+  
+}
+
+model Shape {
+  id        String   @id @default(uuid())
+  type      String   // "rect" (future: line, pencil, etc.)
+
+  x         Float
+  y         Float
+  width     Float
+  height    Float
+
+  stroke    String
+  fill      String
+
+  roomId    Int
+  userId    Int
+
+  room      Room     @relation(fields: [roomId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
 }

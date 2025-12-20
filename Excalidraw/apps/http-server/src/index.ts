@@ -1,5 +1,6 @@
 import cors from "cors";
 import {
+  createRectangleSchema,
   createRoomSchema,
   userSigninSchema,
   userSigninType,
@@ -14,7 +15,7 @@ import { errorHandler } from "./errorhandler";
 import { middleWare } from "./middleWare";
 declare module "express" {
   interface Request {
-    userId?: string;
+    userId?: Number;
   }
 }
 dotenv.config({ path: "../../.env" });
@@ -124,6 +125,44 @@ app.get("/room/:slug", async (req, res) => {
     },
   });
   return res.status(200).json({ roomId: room?.id });
+});
+
+app.post("/shapes", middleWare, async (req: Request, res: Response) => {
+  const parsed = createRectangleSchema.safeParse(req.body);
+  const userId = req.userId as number;
+
+  if (!parsed.success) {
+    return res.status(403).json({ message: "Invalid shape data" });
+  }
+
+  const { roomId, x, y, width, height, stroke, fill } = parsed.data;
+
+  const shape = await prisma.shape.create({
+    data: {
+      type: "rect",
+      x,
+      y,
+      width,
+      height,
+      stroke,
+      fill,
+      roomId,
+      userId,
+    },
+  });
+
+  return res.status(200).json({ shape });
+});
+
+app.get("/shapes/room/:roomId", async (req, res) => {
+  const roomId = Number(req.params.roomId);
+
+  const shapes = await prisma.shape.findMany({
+    where: { roomId },
+    orderBy: { createdAt: "asc" },
+  });
+
+  return res.status(200).json({ shapes });
 });
 
 app.use(errorHandler);

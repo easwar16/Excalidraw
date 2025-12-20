@@ -6,7 +6,7 @@ dotenv.config({ path: "../../.env" });
 
 interface JwtUserPayload extends JwtPayload {
   name: string;
-  id: string;
+  id: Number;
 }
 export const middleWare = (req: Request, res: Response, next: NextFunction) => {
   const headerToken = req.headers["authorization"] ?? "";
@@ -17,7 +17,7 @@ export const middleWare = (req: Request, res: Response, next: NextFunction) => {
   ) as JwtUserPayload;
 
   if (decoded?.id) {
-    req.userId = decoded.id;
+    req.userId = decoded.id as Number;
     next();
   } else {
     res.status(403).json({ message: "Unauthorized" });

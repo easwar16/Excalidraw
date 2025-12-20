@@ -9,7 +9,8 @@
     "strict": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "rootDir": "."
   },
   "include": [
     "**/*.ts",

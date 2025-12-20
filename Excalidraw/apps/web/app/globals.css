@@ -77,8 +77,21 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
+  --canvas-bg: #0f3d36;
+  /* --canvas-bg: #102a2a; */
 }
-
+.toolbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+  z-index: 10;
+}
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
@@ -111,6 +124,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --canvas-bg: #10b981;
 }
 
 @layer base {
@@ -172,4 +186,8 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
+}
+
+.canvas-root canvas {
+  background-color: var(--canvas-bg);
 }

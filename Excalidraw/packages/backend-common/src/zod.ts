@@ -40,3 +40,15 @@ export const createRoomSchema = z.object({
 });
 
 export type createRoomType = z.infer<typeof createRoomSchema>;
+
+export const createRectangleSchema = z.object({
+  roomId: z.number(),
+  x: z.number(),
+  y: z.number(),
+  width: z.number(),
+  height: z.number(),
+  stroke: z.string(),
+  fill: z.string(),
+});
+
+export type CreateRectangleType = z.infer<typeof createRectangleSchema>;
