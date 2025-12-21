@@ -7,7 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 
 export type Shape =
   | { id: string; type: "rect"; x: number; y: number; w: number; h: number }
-  | { id: string; type: "rhombus"; x: number; y: number; w: number; h: number }
+  | {
+      id: string;
+      type: "rhombus";
+      top: { x: number; y: number };
+      bottom: { x: number; y: number };
+      left: { x: number; y: number };
+      right: { x: number; y: number };
+    }
   | { id: string; type: "pencil"; points: { x: number; y: number }[] }
   | {
       id: string;

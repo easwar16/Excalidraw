@@ -66,7 +66,7 @@ export default function Auth() {
 
     axios.get("/api/auth/me", { withCredentials: true }).then((res) => {
       if (res.data.authenticated) {
-        router.replace("/canvas");
+        router.replace("/canvas/default");
       }
     });
   };
@@ -107,7 +107,7 @@ export default function Auth() {
   useEffect(() => {
     axios.get("/api/auth/me", { withCredentials: true }).then((res) => {
       if (res.data.authenticated) {
-        router.replace("/canvas");
+        router.replace("/canvas/default");
       }
     });
   }, []);

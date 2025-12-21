@@ -8,6 +8,7 @@ import { PencilTool } from "@/lib/shapes/PencilTool";
 import { LineTool } from "@/lib/shapes/LineTool";
 import { ArrowTool } from "@/lib/shapes/ArrowTool";
 import { SelectTool } from "@/lib/shapes/SelectTool";
+import { RhombusTool } from "@/lib/shapes/RhombusTool";
 
 export default function CanvasComponent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,7 +36,7 @@ export default function CanvasComponent() {
         manager.setActiveTool(new ArrowTool()); // or SelectTool later
         break;
       case "rhombus":
-        manager.setActiveTool(new LineTool()); // or SelectTool later
+        manager.setActiveTool(new RhombusTool()); // or SelectTool later
         break;
     }
   }, [currentTool]);

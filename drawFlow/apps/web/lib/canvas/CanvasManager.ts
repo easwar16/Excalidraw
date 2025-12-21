@@ -19,6 +19,13 @@ class CanvasManager {
     h: number;
   } | null = null;
 
+  private draftRhom: {
+    top: Point;
+    bottom: Point;
+    left: Point;
+    right: Point;
+  } | null = null;
+
   private draftPencil: Point[] | null = null;
 
   private draftLine: { startPoint: Point; endPoint: Point } | null = null;
@@ -31,7 +38,7 @@ class CanvasManager {
     this.ctx.strokeStyle = "#60a5fa"; // light blue
 
     const bounds = this.getShapeBounds(shape);
-    this.ctx.strokeRect(bounds.x, bounds.y, bounds.w, bounds.h);
+    this.ctx.strokeRect(bounds?.x!, bounds?.y!, bounds?.w!, bounds?.h!);
 
     this.ctx.restore();
   }
@@ -102,12 +109,17 @@ class CanvasManager {
     this.draftRect = { x, y, w, h };
     this.render(useEditorStore.getState().shapes);
   }
+  setDraftRhom(top: Point, bottom: Point, left: Point, right: Point) {
+    this.draftRhom = { top, bottom, left, right };
+    this.render(useEditorStore.getState().shapes);
+  }
 
   clearAllDrafts() {
     this.draftArrow = null;
     this.draftLine = null;
     this.draftPencil = null;
     this.draftRect = null;
+    this.draftRhom = null;
   }
 
   static getInstance() {
@@ -168,6 +180,31 @@ class CanvasManager {
         this.draftRect.w,
         this.draftRect.h
       );
+
+      this.ctx.restore();
+    }
+    if (this.draftRhom) {
+      this.ctx.save();
+
+      this.ctx.setLineDash([6, 4]); // dashed preview
+      this.ctx.strokeStyle = "#ffffff";
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.draftRhom.top.x!, this.draftRhom.top.y!);
+      this.ctx.lineTo(this.draftRhom.right.x!, this.draftRhom.right.y!);
+      this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.draftRhom.right.x!, this.draftRhom.right.y!);
+      this.ctx.lineTo(this.draftRhom.bottom.x!, this.draftRhom.bottom.y!);
+      this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.draftRhom.bottom.x!, this.draftRhom.bottom.y!);
+      this.ctx.lineTo(this.draftRhom.left.x!, this.draftRhom.left.y!);
+      this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.draftRhom.left.x!, this.draftRhom.left.y!);
+      this.ctx.lineTo(this.draftRhom.top.x!, this.draftRhom.top.y!);
+      this.ctx.stroke();
 
       this.ctx.restore();
     }
@@ -247,6 +284,24 @@ class CanvasManager {
     switch (shape.type) {
       case "rect":
         this.ctx.strokeRect(shape.x, shape.y, shape.w, shape.h);
+        break;
+      case "rhombus":
+        this.ctx.beginPath();
+        this.ctx.moveTo(shape.top.x!, shape.top.y!);
+        this.ctx.lineTo(shape.right.x!, shape.right.y!);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(shape.right.x!, shape.right.y!);
+        this.ctx.lineTo(shape.bottom.x!, shape.bottom.y!);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(shape.bottom.x!, shape.bottom.y!);
+        this.ctx.lineTo(shape.left.x!, shape.left.y!);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(shape.left.x!, shape.left.y!);
+        this.ctx.lineTo(shape.top.x!, shape.top.y!);
+        this.ctx.stroke();
         break;
       case "pencil":
         this.ctx.beginPath();

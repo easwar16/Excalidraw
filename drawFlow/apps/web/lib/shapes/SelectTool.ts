@@ -39,6 +39,8 @@ export class SelectTool implements ToolController {
             y: p.y + dy,
           })),
         };
+      default:
+        return shape;
     }
   }
   onPointerDown(e: PointerEvent) {
@@ -57,7 +59,6 @@ export class SelectTool implements ToolController {
         return;
       }
     }
-    console.log("I am here");
 
     setSelectedShape(null);
     cm.render(shapes);
